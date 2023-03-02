@@ -16,12 +16,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
 
     # Создает подключение к каналу(ChatEvent) при запгрузке страницы
-    event(new \App\Events\ChatEvent('',''));
+    event(new \App\Events\ChatEvent('','',''));
 
     return view('chat');
 });
 
 Route::post('chat-message', function (\Illuminate\Http\Request $request) {
-    event(new \App\Events\ChatEvent($request->message, $request->name));
+    event(new \App\Events\ChatEvent($request->message, $request->name, $request->userKey));
     return null;
 });
+
+Route::get ( '/audio/{file?}/{extension?}',  "YourController@embedAudio" );

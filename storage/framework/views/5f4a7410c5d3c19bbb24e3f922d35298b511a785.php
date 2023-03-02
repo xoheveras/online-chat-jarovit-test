@@ -16,12 +16,13 @@
         </div>
     </div>
 
-    <div class="message-box" id="messages">
-
-    </div>
-    <form id="form">
-        <input id="input-message" type="text" placeholder="Message...">
-    </form>
+    <div class="chat-box">
+        <div class="message-box" id="messages">
+        </div>
+            <form id="form">
+                <input id="input-message" type="text" placeholder="Message...">
+            </form>
+        </div>
 </body>
     <script src="<?php echo e(mix('js/app.js')); ?>"></script>
 </html><?php /**PATH C:\Users\xoheveras\Documents\Laravel Project\online-chat-jarovit-test\resources\views/chat.blade.php ENDPATH**/ ?>

@@ -16,12 +16,13 @@
         </div>
     </div>
 
-    <div class="message-box" id="messages">
-
-    </div>
-    <form id="form">
-        <input id="input-message" type="text" placeholder="Message...">
-    </form>
+    <div class="chat-box">
+        <div class="message-box" id="messages">
+        </div>
+            <form id="form">
+                <input id="input-message" type="text" placeholder="Message...">
+            </form>
+        </div>
 </body>
     <script src="{{ mix('js/app.js') }}"></script>
 </html>

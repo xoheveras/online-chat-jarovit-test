@@ -3,12 +3,13 @@ const { default: axios } = require('axios');
 require('./bootstrap');
 
 // Данные пользователя
-var name = "Test";
+var name = "";
+var userKey = Math.random().toString(36).substr(2, 10);
 
 // Ссылаемся на канал
 const channel = Echo.channel('public.chat.1');
 
-// Получаем форму
+// Получаем обекты страницы
 const form = document.getElementById('form');
 const inputMessage = document.getElementById('input-message');
 const messagesBox = document.getElementById('messages');
@@ -17,8 +18,15 @@ const nameInput = document.getElementById('input-name');
 const modal = document.getElementById("modal");
 
 loginBTN.addEventListener('click', function() {
-    name = nameInput.value;
-    modal.remove();
+    if(nameInput.value != '')
+    {
+        name = nameInput.value;
+        modal.remove();
+    }
+    else
+    {
+        alert('Имя не может быть пустым');
+    }
 });
 
 form.addEventListener('submit', function (event) {
@@ -30,8 +38,11 @@ form.addEventListener('submit', function (event) {
 
     axios.post('/chat-message', {
         message: userInput,
-        name: name
+        name: name,
+        userKey: userKey
     });
+
+    inputMessage.value = "";
 
 });
 
@@ -40,11 +51,25 @@ channel.subscribed(() => {
     console.log('Подключение к каналу завершено')
 }).listen('.chat-message', (event) => {
 
-    // В event содержится вся информация которую мы передаем по сокету
+    var date = new Date();
 
-    console.log(event);
+    audioObj = new Audio('storage/audio/sound.mp3');
 
     if(event.message != '')
-        messagesBox.innerHTML += "<div>"+event.name+":"+event.message+"</div>";
+    {
+
+        if(event.userKey != userKey && name != '')
+            audioObj.play();
+
+        messagesBox.innerHTML += `<div class="message-block ${event.userKey === userKey ? "message-block-user" : ""}">
+                                    <div class="message-boxer">
+                                        <p class="name-text">${event.name}</p>
+                                        <div class="content">
+                                            <p class="message-user-box send-text ${event.userKey === userKey ? "message-block-content" : ""}">${event.message}</p>
+                                        </div>
+                                        <p class="time-text">${date.getHours()}:${date.getMinutes()}</p>
+                                    </div>
+                                  </div>`;
+    }
 
 });

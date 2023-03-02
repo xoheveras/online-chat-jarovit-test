@@ -16,16 +16,18 @@ class ChatEvent implements ShouldBroadcast
 
     private $message;
     private $name;
+    private $userKey;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(string $message, string $name)
+    public function __construct(string $message, string $name, string $userKey)
     {
         $this->message = $message;
         $this->name = $name;
+        $this->userKey = $userKey;
     }
 
     /**
@@ -51,7 +53,8 @@ class ChatEvent implements ShouldBroadcast
    {
         return [
             'message' => $this->message,
-            'name' => $this->name
+            'name' => $this->name,
+            'userKey' => $this->userKey,
         ];
    }
 }
