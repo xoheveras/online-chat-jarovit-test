@@ -1,6 +1,6 @@
-const { default: axios } = require('axios');
-
 require('./bootstrap');
+
+const { default: axios } = require('axios');
 
 // Данные пользователя
 var name = "";

@@ -2060,55 +2060,7 @@ module.exports = {
   \*****************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-var _require = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"),
-  axios = _require["default"];
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
-
-// Данные пользователя
-var name = "";
-var userKey = Math.random().toString(36).substr(2, 10);
-
-// Ссылаемся на канал
-var channel = Echo.channel('public.chat.1');
-
-// Получаем обекты страницы
-var form = document.getElementById('form');
-var inputMessage = document.getElementById('input-message');
-var messagesBox = document.getElementById('messages');
-var loginBTN = document.getElementById('login');
-var nameInput = document.getElementById('input-name');
-var modal = document.getElementById("modal");
-loginBTN.addEventListener('click', function () {
-  if (nameInput.value != '') {
-    name = nameInput.value;
-    modal.remove();
-  } else {
-    alert('Имя не может быть пустым');
-  }
-});
-form.addEventListener('submit', function (event) {
-  // Убирает обновление страницы при отправке
-  event.preventDefault();
-  var userInput = inputMessage.value;
-  axios.post('/chat-message', {
-    message: userInput,
-    name: name,
-    userKey: userKey
-  });
-  inputMessage.value = "";
-});
-
-// Выводим информацию при подписке на канал
-channel.subscribed(function () {
-  console.log('Подключение к каналу завершено');
-}).listen('.chat-message', function (event) {
-  var date = new Date();
-  audioObj = new Audio('storage/audio/sound.mp3');
-  if (event.message != '') {
-    if (event.userKey != userKey && name != '') audioObj.play();
-    messagesBox.innerHTML += "<div class=\"message-block ".concat(event.userKey === userKey ? "message-block-user" : "", "\">\n                                    <div class=\"message-boxer\">\n                                        <p class=\"name-text\">").concat(event.name, "</p>\n                                        <div class=\"content\">\n                                            <p class=\"message-user-box send-text ").concat(event.userKey === userKey ? "message-block-content" : "", "\">").concat(event.message, "</p>\n                                        </div>\n                                        <p class=\"time-text\">").concat(date.getHours(), ":").concat(date.getMinutes(), "</p>\n                                    </div>\n                                  </div>");
-  }
-});
 
 /***/ }),
 
